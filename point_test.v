@@ -3,7 +3,10 @@ module geometry
 import math
 
 fn test_point_create() {
-	p := point_new(10, 20)
+	p := Point{
+		x: 10
+		y: 20
+	}
 	println(p.string())
 	assert p.x == 10
 	assert p.y == 20
@@ -25,11 +28,14 @@ fn test_point_clone() {
 
 fn test_point_morph() {
 	mut p := point_new(10, 20)
-	mut q := p.morph(Transformer2D{fn (x f64) f64 {
-		return x + 1
-	}, fn (x f64) f64 {
-		return x * x
-	}})
+	mut q := p.morph(Transformer{
+		x: fn (x f64) f64 {
+			return x + 1
+		}
+		y: fn (x f64) f64 {
+			return x * x
+		}
+	})
 
 	println(p.string())
 	println(q.string())
@@ -154,24 +160,42 @@ fn test_point_rad() {
 	mut p := point_new(1, 1)
 	println(p.rad())
 	assert p.rad() == math.pi_4
-	p = Point{-1, 1}
+	p = Point{
+		x: -1
+		y: 1
+	}
 	println(p.rad())
 	assert p.rad() == math.pi_4 * 3
-	p = Point{-1, -1}
+	p = Point{
+		x: -1
+		y: -1
+	}
 	println(p.rad())
 	assert p.rad() == math.pi_4 * 5
-	p = Point{1, -1}
+	p = Point{
+		x: 1
+		y: -1
+	}
 	println(p.rad())
 	assert p.rad() == math.pi_4 * 7
-	p = Point{1, math.sqrt_3}
+	p = Point{
+		x: 1
+		y: math.sqrt_3
+	}
 	println(p.rad())
 	assert p.rad() == math.pi / 3
-	p = Point{-1, math.sqrt_3}
+	p = Point{
+		x: -1
+		y: math.sqrt_3
+	}
 	println(p.rad())
 	println(2 * math.pi / 3)
 	println(math.degrees(p.rad()))
 	assert math.tolerance(p.rad(), 2 * math.pi / 3, 0.1)
-	p = Point{1, -math.sqrt_3}
+	p = Point{
+		x: 1
+		y: -math.sqrt_3
+	}
 	println(p.rad())
 	println(5 * math.pi / 3)
 	assert p.rad() == 5 * math.pi / 3
@@ -181,22 +205,31 @@ fn test_point_deg() {
 	mut p := point_new(1, 1)
 	println(p.deg())
 	assert p.deg() == 45
-	mut p := point_new(-1, 1)
+	p = point_new(-1, 1)
 	println(p.deg())
 	assert p.deg() == 135
-	mut p := point_new(-1, -1)
+	p = point_new(-1, -1)
 	println(p.deg())
 	assert p.deg() == 225
-	mut p := point_new(1, -1)
+	p = point_new(1, -1)
 	println(p.deg())
 	assert p.deg() == 315
-	p = Point{1, math.sqrt_3}
+	p = Point{
+		x: 1
+		y: math.sqrt_3
+	}
 	println(p.deg())
 	assert math.tolerance(p.deg(), 60, 0.1)
-	p = Point{-1, math.sqrt_3}
+	p = Point{
+		x: -1
+		y: math.sqrt_3
+	}
 	println(p.deg())
 	assert math.tolerance(p.deg(), 120, 0.1)
-	p = Point{1, -math.sqrt_3}
+	p = Point{
+		x: 1
+		y: -math.sqrt_3
+	}
 	println(p.deg())
 	println(5 * math.pi / 3)
 	assert math.tolerance(p.deg(), 300, 0.1)

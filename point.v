@@ -21,7 +21,7 @@ pub fn unit_fn[T]() TransformerFn[T] {
 
 [heap]
 pub struct Point {
-pub:
+pub mut:
 	x   f64
 	y   f64
 	z   f64

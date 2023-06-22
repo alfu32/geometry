@@ -4,7 +4,7 @@ Module {
 	description: '4d geometry primitives and methods'
     repo_url: 'https://github.com/alfu32/geometry'
     vcs: 'git'
-    tags: ['range', 'for', 'to', 'step', 'next',]
-	version: '0.2.0'
+    tags: ['point', 'box', 'matrix', 'transform', 'next',]
+	version: '0.2.1'
 	license: 'MIT'
 }
