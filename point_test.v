@@ -3,14 +3,14 @@ module geometry
 import math
 
 fn test_point_create() {
-	p := Point{10, 20}
+	p := point_new(10, 20)
 	println(p.string())
 	assert p.x == 10
 	assert p.y == 20
 }
 
 fn test_point_clone() {
-	mut p := Point{10, 20}
+	mut p := point_new(10, 20)
 	mut q := p.clone()
 
 	println(p.string())
@@ -24,7 +24,7 @@ fn test_point_clone() {
 }
 
 fn test_point_morph() {
-	mut p := Point{10, 20}
+	mut p := point_new(10, 20)
 	mut q := p.morph(Transformer2D{fn (x f64) f64 {
 		return x + 1
 	}, fn (x f64) f64 {
@@ -41,7 +41,7 @@ fn test_point_morph() {
 }
 
 fn test_point_isomorph() {
-	mut p := Point{10, 20}
+	mut p := point_new(10, 20)
 	mut q := p.isomorph(fn (x f64) f64 {
 		return x + 1
 	})
@@ -56,7 +56,7 @@ fn test_point_isomorph() {
 }
 
 fn test_point_add() {
-	mut p := Point{10, 20}
+	mut p := point_new(10, 20)
 	mut q := p.add(p)
 
 	println(p.string())
@@ -69,7 +69,7 @@ fn test_point_add() {
 }
 
 fn test_point_sub() {
-	mut p := Point{10, 20}
+	mut p := point_new(10, 20)
 	mut q := p.sub(p)
 
 	println(p.string())
@@ -82,7 +82,7 @@ fn test_point_sub() {
 }
 
 fn test_point_scale() {
-	mut p := Point{10, 20}
+	mut p := point_new(10, 20)
 	mut q := p.scale(p)
 
 	println(p.string())
@@ -95,7 +95,7 @@ fn test_point_scale() {
 }
 
 fn test_point_mul() {
-	mut p := Point{10, 20}
+	mut p := point_new(10, 20)
 	mut q := p.mul(2)
 
 	println(p.string())
@@ -108,8 +108,8 @@ fn test_point_mul() {
 }
 
 fn test_point_dot() {
-	mut p := Point{3, 4}
-	mut q := Point{5, 6}
+	mut p := point_new(3, 4)
+	mut q := point_new(5, 6)
 	mut d := p.dot(q)
 
 	println(p.string())
@@ -120,7 +120,7 @@ fn test_point_dot() {
 }
 
 fn test_point_len2() {
-	mut p := Point{3, 4}
+	mut p := point_new(3, 4)
 	mut q := p.len2()
 
 	println(p.string())
@@ -130,7 +130,7 @@ fn test_point_len2() {
 }
 
 fn test_point_len() {
-	mut p := Point{3, 4}
+	mut p := point_new(3, 4)
 	mut q := p.len()
 
 	println(p.string())
@@ -140,7 +140,7 @@ fn test_point_len() {
 }
 
 fn test_point_norm() {
-	mut p := Point{1, 1}
+	mut p := point_new(1, 1)
 	mut q := p.norm()
 
 	println(p.string())
@@ -151,7 +151,7 @@ fn test_point_norm() {
 }
 
 fn test_point_rad() {
-	mut p := Point{1, 1}
+	mut p := point_new(1, 1)
 	println(p.rad())
 	assert p.rad() == math.pi_4
 	p = Point{-1, 1}
@@ -178,16 +178,16 @@ fn test_point_rad() {
 }
 
 fn test_point_deg() {
-	mut p := Point{1, 1}
+	mut p := point_new(1, 1)
 	println(p.deg())
 	assert p.deg() == 45
-	p = Point{-1, 1}
+	mut p := point_new(-1, 1)
 	println(p.deg())
 	assert p.deg() == 135
-	p = Point{-1, -1}
+	mut p := point_new(-1, -1)
 	println(p.deg())
 	assert p.deg() == 225
-	p = Point{1, -1}
+	mut p := point_new(1, -1)
 	println(p.deg())
 	assert p.deg() == 315
 	p = Point{1, math.sqrt_3}
@@ -203,7 +203,7 @@ fn test_point_deg() {
 }
 
 fn test_point_to_polar() {
-	mut p := Point{1, 1}
+	mut p := point_new(1, 1)
 	mut q := p.to_polar()
 	a := math.degrees(q.y)
 
@@ -215,7 +215,7 @@ fn test_point_to_polar() {
 }
 
 fn test_point_to_orthogonal() {
-	mut p := Point{1, 1}
+	mut p := point_new(1, 1)
 	mut q := p.to_polar()
 	mut u := q.to_orthogonal()
 
@@ -228,7 +228,7 @@ fn test_point_to_orthogonal() {
 }
 
 fn test_point_round() {
-	mut p := Point{1234, 5678}
+	mut p := point_new(1234, 5678)
 	mut u := p.round(10)
 	mut v := p.round(100)
 	mut w := p.round(1000)
@@ -247,7 +247,7 @@ fn test_point_round() {
 }
 
 fn test_point_floor() {
-	mut p := Point{1234, 5678}
+	mut p := point_new(1234, 5678)
 	mut u := p.floor(10)
 	mut v := p.floor(100)
 	mut w := p.floor(1000)
@@ -266,7 +266,7 @@ fn test_point_floor() {
 }
 
 fn test_point_ceil() {
-	mut p := Point{1234, 5678}
+	mut p := point_new(1234, 5678)
 	mut u := p.ceil(10)
 	mut v := p.ceil(100)
 	mut w := p.ceil(1000)

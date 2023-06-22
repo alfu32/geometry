@@ -16,19 +16,13 @@ pub fn (mut iter BoxIterator) next() ?Box {
 		if iter.current.y > iter.end.y {
 			return none
 		} else {
-			iter.current = Point{
-				x: iter.start.x
-				y: iter.current.y + iter.step.y
-			}
+			iter.current = point_new(iter.start.x, iter.current.y + iter.step.y)
 		}
 	} else {
 		if iter.current.y > iter.end.y {
 			return none
 		} else {
-			iter.current = Point{
-				x: iter.current.x + iter.step.x
-				y: iter.current.y
-			}
+			iter.current = point_new(iter.current.x + iter.step.x, iter.current.y)
 		}
 	}
 	iter.index++
@@ -63,9 +57,9 @@ pub fn (b Box) corners() []Point {
 	a := b.anchor
 	c := b.corner()
 	mut r := [a.clone()]
-	r << Point{a.x, c.y}
+	r << Point{a.x, c.y, a.z, a.t, ''}
 	r << c.clone()
-	r << Point{c.x, a.y}
+	r << Point{c.x, a.y, c.z, c.t, ''}
 	return r
 }
 
@@ -104,7 +98,7 @@ pub fn (bx Box) slices(scale f64) BoxIterator {
 		current: a.clone()
 		start: a.clone()
 		end: b.clone()
-		step: Point{scale, scale}
+		step: point_new(scale, scale)
 	}
 }
 
