@@ -114,13 +114,11 @@ pub fn (p Point) dot(o Point) f64 {
 }
 
 pub fn (p Point) len2() f64 {
-	q := p.scale(geometry.i.add(geometry.j))
-	return q.dot(q)
+	return p.dot(p)
 }
 
 pub fn (p Point) len3() f64 {
-	q := p.scale(geometry.i.add(geometry.j))
-	return q.dot(q)
+	return p.dot(p)
 }
 
 pub fn (p Point) len() f64 {
