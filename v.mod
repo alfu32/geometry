@@ -5,6 +5,6 @@ Module {
     repo_url: 'https://github.com/alfu32/geometry'
     vcs: 'git'
     tags: ['point', 'box', 'matrix', 'transform', 'next',]
-	version: '0.2.1'
+	version: '0.3.0'
 	license: 'MIT'
 }
