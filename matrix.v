@@ -15,7 +15,7 @@ pub mut:
 	a33 f64 = 1.0
 }
 
-pub fn new_matrix() Matrix3 {
+pub fn identity() Matrix3 {
 	return Matrix3{
 		a11: 1.0
 		a12: 0.0
@@ -29,7 +29,7 @@ pub fn new_matrix() Matrix3 {
 	}
 }
 
-pub fn create_matrix(a f64, b f64, c f64, d f64, e f64, f f64) Matrix3 {
+pub fn create_transform_matrix(a f64, b f64, c f64, d f64, e f64, f f64) Matrix3 {
 	return Matrix3{
 		a11: a
 		a12: b
@@ -43,7 +43,7 @@ pub fn create_matrix(a f64, b f64, c f64, d f64, e f64, f f64) Matrix3 {
 	}
 }
 
-pub fn (mut m Matrix3) amplify(n f64) Matrix3 {
+pub fn (m Matrix3) amplify(n f64) Matrix3 {
 	return Matrix3{
 		a11: n * m.a11
 		a12: n * m.a12
@@ -57,7 +57,7 @@ pub fn (mut m Matrix3) amplify(n f64) Matrix3 {
 	}
 }
 
-pub fn (mut m Matrix3) attenuate(n f64) Matrix3 {
+pub fn (m Matrix3) attenuate(n f64) Matrix3 {
 	return Matrix3{
 		a11: m.a11 / n
 		a12: m.a12 / n
@@ -71,7 +71,7 @@ pub fn (mut m Matrix3) attenuate(n f64) Matrix3 {
 	}
 }
 
-pub fn (mut m Matrix3) adjust(b Matrix3) Matrix3 {
+pub fn (m Matrix3) adjust(b Matrix3) Matrix3 {
 	return Matrix3{
 		a11: b.a11 * m.a11
 		a12: b.a12 * m.a12
@@ -85,7 +85,7 @@ pub fn (mut m Matrix3) adjust(b Matrix3) Matrix3 {
 	}
 }
 
-pub fn (mut m Matrix3) transpose() Matrix3 {
+pub fn (m Matrix3) transpose() Matrix3 {
 	return Matrix3{
 		a11: m.a11
 		a12: m.a21
@@ -99,7 +99,7 @@ pub fn (mut m Matrix3) transpose() Matrix3 {
 	}
 }
 
-pub fn (mut m Matrix3) adjugate() Matrix3 {
+pub fn (m Matrix3) adjugate() Matrix3 {
 	return Matrix3{
 		a11: m.a22 * m.a33 - m.a23 * m.a32
 		a12: -(m.a12 * m.a33 - m.a32 * m.a13)
@@ -113,7 +113,7 @@ pub fn (mut m Matrix3) adjugate() Matrix3 {
 	}
 }
 
-pub fn (mut m Matrix3) det() f64 {
+pub fn (m Matrix3) det() f64 {
 	// q:=m.adjugate().adjust(m)
 	// return q.a11+q.a12+q.a13+q.a21+q.a22+q.a23+q.a31+q.a32+q.a33
 	return m.a11 * (m.a22 * m.a33 - m.a23 * m.a32) - m.a12 * (m.a21 * m.a33 - m.a23 * m.a31) +
@@ -122,7 +122,7 @@ pub fn (mut m Matrix3) det() f64 {
 	// 	+ m.a13*(m.a12*m.a23-m.a13*m.a22) - m.a23*(m.a11*m.a23-m.a13*m.a21) + m.a33*(m.a11*m.a22-m.a12*m.a21)
 }
 
-pub fn (mut m Matrix3) inverse() Matrix3 {
+pub fn (m Matrix3) inverse() Matrix3 {
 	mut inv := m.adjugate()
 	inv = inv.attenuate(m.det())
 	// return q.a11+q.a12+q.a13+q.a21+q.a22+q.a23+q.a31+q.a32+q.a33
@@ -131,7 +131,7 @@ pub fn (mut m Matrix3) inverse() Matrix3 {
 	// 	+ m.a13*(m.a12*m.a23-m.a13*m.a22) - m.a23*(m.a11*m.a23-m.a13*m.a21) + m.a33*(m.a11*m.a22-m.a12*m.a21)
 }
 
-pub fn (mut m Matrix3) mul(n Matrix3) Matrix3 {
+pub fn (m Matrix3) mul(n Matrix3) Matrix3 {
 	return Matrix3{
 		a11: m.a11 * n.a11 + m.a12 * n.a21 + m.a13 * n.a31
 		a12: m.a11 * n.a12 + m.a12 * n.a22 + m.a13 * n.a32
@@ -145,7 +145,7 @@ pub fn (mut m Matrix3) mul(n Matrix3) Matrix3 {
 	}
 }
 
-pub fn (mut m Matrix3) translate(x f64, y f64) Matrix3 {
+pub fn (m Matrix3) translate(x f64, y f64) Matrix3 {
 	return Matrix3{
 		a11: m.a11
 		a12: m.a12
@@ -159,7 +159,7 @@ pub fn (mut m Matrix3) translate(x f64, y f64) Matrix3 {
 	}
 }
 
-pub fn (mut m Matrix3) rotate(a f64) Matrix3 {
+pub fn (m Matrix3) rotate(a f64) Matrix3 {
 	sa := math.sin(a)
 	ca := math.cos(a)
 	m0 := Matrix3{
@@ -176,7 +176,7 @@ pub fn (mut m Matrix3) rotate(a f64) Matrix3 {
 	return m.mul(m0)
 }
 
-pub fn (mut m Matrix3) scale(x f64, y f64) Matrix3 {
+pub fn (m Matrix3) scale(x f64, y f64) Matrix3 {
 	m0 := Matrix3{
 		a11: x
 		a12: 0.0
@@ -192,7 +192,7 @@ pub fn (mut m Matrix3) scale(x f64, y f64) Matrix3 {
 }
 
 pub fn (mut m Matrix3) transform(a f64, b f64, c f64, d f64, e f64, f f64) Matrix3 {
-	mut m0 := create_matrix(a, b, c, d, e, f)
+	mut m0 := create_transform_matrix(a, b, c, d, e, f)
 	return m.mul(m0)
 }
 
@@ -212,4 +212,8 @@ pub fn (m Matrix3) to_string() string {
 
 pub fn (m Matrix3) to_svg_string() string {
 	return '${m.a11} ${m.a12} ${m.a13} ${m.a21} ${m.a22} ${m.a23}'
+}
+
+pub fn (m Matrix3) transform_coordinates(x f64, y f64) (f64, f64) {
+	return x * m.a11 + y * m.a12 + m.a13, x * m.a21 + y * m.a22 + m.a23 //,x*m.a31+y*m.a32+z*m.a33
 }

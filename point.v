@@ -173,6 +173,11 @@ pub fn (p Point) ceil(scale f64) Point {
 	})
 }
 
+pub fn (p Point) matrix_transform2d(matrix Matrix3) Point {
+	x, y := matrix.transform_coordinates(p.x, p.y)
+	return Point{x, y, p.z, p.t, p.tag}
+}
+
 pub fn (p Point) string() string {
 	return 'Point{${p.x},${p.y},${p.z},${p.t},${p.tag}}'
 }
